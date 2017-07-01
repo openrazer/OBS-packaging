@@ -5,7 +5,7 @@
 
 pkgbase=razer-drivers
 pkgname=('python-razer' 'razer-daemon' 'razer-driver-dkms' 'openrazer-meta')
-pkgver=1.1.13
+pkgver=1.1.14
 #_commit=6ae1f7d55bf10cc6b5cb62a5ce99ff22c43e0701
 pkgrel=1
 pkgdesc="An entirely open source driver and user-space daemon that allows you to manage your Razer peripherals on GNU/Linux."
@@ -18,7 +18,7 @@ if [ -z $_commit ]; then
 else
   source=("https://github.com/terrycain/razer-drivers/archive/$_commit.tar.gz")
 fi
-sha256sums=('33938e72e8815db90f08001ce3e34fa6cc7e78979f57a914ab5f152c8c90a42e')
+sha256sums=('a8ca390f29ecc5d220df8ef00b2bebb54b0ef4551ba2e0245296bb72eb461f41')
 
 package_python-razer() {
   pkgdesc="Python library for accessing the Razer daemon from Python."
