@@ -6,17 +6,17 @@
 #define gitcommit 6ae1f7d55bf10cc6b5cb62a5ce99ff22c43e0701
 
 Name: openrazer-meta
-Version: 1.1.14
+Version: 1.1.16
 Release: 1%{?dist}
 Summary: Open source driver and user-space daemon for managing Razer devices
 
 License: GPL-2.0
-URL: https://github.com/terrycain/razer-drivers
+URL: https://github.com/openrazer/openrazer
 
 %if 0%{?gitcommit:1}
-Source0: https://github.com/terrycain/razer-drivers/archive/%{gitcommit}.tar.gz
+Source0: https://github.com/openrazer/openrazer/archive/%{gitcommit}.tar.gz
 %else
-Source0: https://github.com/terrycain/razer-drivers/archive/v%{version}.tar.gz
+Source0: https://github.com/openrazer/openrazer/archive/v%{version}.tar.gz
 %endif
 
 BuildArch: noarch
@@ -88,9 +88,9 @@ Python library for accessing the daemon from Python.
 
 %prep
 %if 0%{?gitcommit:1}
-%autosetup -n razer-drivers-%{gitcommit}
+%autosetup -n openrazer-%{gitcommit}
 %else
-%autosetup -n razer-drivers-%{version}
+%autosetup -n openrazer-%{version}
 %endif
 
 %build

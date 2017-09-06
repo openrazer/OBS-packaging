@@ -15,9 +15,9 @@ cd $(mktemp -d)
 # Download the tarball.
 curl -L -O $repourl/archive/v$version.tar.gz
 # Extract the debian/ folder from the archive.
-tar xzf v$version.tar.gz razer-drivers-$version/debian
+tar xzf v$version.tar.gz openrazer-$version/debian
 # Move the debian/ folder out of the new folder.
-mv razer-drivers-$version/debian .
+mv openrazer-$version/debian .
 # Remove the linux-headers-generic line.
 sed -i '/linux-headers-generic/d' debian/control
 

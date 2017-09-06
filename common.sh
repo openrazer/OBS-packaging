@@ -1,1 +1,1 @@
-repourl="https://github.com/terrycain/razer-drivers"
+repourl="https://github.com/openrazer/openrazer"
