@@ -6,7 +6,7 @@
 #define gitcommit 6ae1f7d55bf10cc6b5cb62a5ce99ff22c43e0701
 
 Name: openrazer-meta
-Version: 1.1.16
+Version: 2.0.0
 Release: 1%{?dist}
 Summary: Open source driver and user-space daemon for managing Razer devices
 
@@ -159,15 +159,15 @@ fi
 %{_usrsrc}/%{dkms_name}-%{dkms_version}/
 
 %files -n razer-daemon
-%{_bindir}/razer-daemon
-%{python3_sitelib}/razer_daemon/
-%{python3_sitelib}/razer_daemon-*.egg-info/
+%{_bindir}/openrazer-daemon
+%{python3_sitelib}/openrazer_daemon/
+%{python3_sitelib}/openrazer_daemon-*.egg-info/
 %{_datadir}/openrazer/
 %{_datadir}/dbus-1/services/org.razer.service
-%{_prefix}/lib/systemd/user/razer-daemon.service
+%{_prefix}/lib/systemd/user/openrazer-daemon.service
 %{_mandir}/man5/razer.conf.5.gz
-%{_mandir}/man8/razer-daemon.8.gz
+%{_mandir}/man8/openrazer-daemon.8.gz
 
 %files -n python3-razer
-%{python3_sitelib}/razer/
-%{python3_sitelib}/razer-*.egg-info/
+%{python3_sitelib}/openrazer/
+%{python3_sitelib}/openrazer-*.egg-info/
