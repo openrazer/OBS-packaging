@@ -1,5 +1,6 @@
 *.gz
 *.xz
 *.dsc
+!openrazer.dsc
 _service
 .osc/

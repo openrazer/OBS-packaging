@@ -7,7 +7,7 @@ if [ ! $version ]; then
 fi
 
 # Remove old debian files
-rm razer_*
+rm openrazer_*
 # Run various scripts
 ./make_debian_orig_tar_gz.sh $version
 ./make_debian_tar_xz.sh $version

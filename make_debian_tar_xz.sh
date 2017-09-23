@@ -22,18 +22,18 @@ mv openrazer-$version/debian .
 sed -i '/linux-headers-generic/d' debian/control
 
 # Add new meta package
-cat <<EOF >> debian/control
-
-Package: openrazer-meta
-Section: misc
-Architecture: all
-Depends: python3-razer,
-         razer-daemon,
-         razer-kernel-modules-dkms
-Description: Meta package for openrazer
-EOF
+#cat <<EOF >> debian/control
+#
+#Package: openrazer-meta
+#Section: misc
+#Architecture: all
+#Depends: python3-razer,
+#         razer-daemon,
+#         razer-kernel-modules-dkms
+#Description: Meta package for openrazer
+#EOF
 
 # Repack the folder.
-tar cf - debian/ | xz -c > razer_$version-0.debian.tar.xz
+tar cf - debian/ | xz -c > openrazer_$version-0.debian.tar.xz
 # Move the resulting file back.
-mv razer_$version-0.debian.tar.xz $origloc
+mv openrazer_$version-0.debian.tar.xz $origloc

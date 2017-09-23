@@ -29,14 +29,14 @@ checksum=$(grep "checksum" _service | cut -d '>' -f2 | cut -d '<' -f1)
 # Arch Linux
 sed -i "s/sha256sums=(.*/sha256sums=('"$checksum"')/" PKGBUILD
 
-filesize_orig=$(stat --printf="%s" razer_$version.orig.tar.gz)
-filesize_debian=$(stat --printf="%s" razer_$version-0.debian.tar.xz)
-md5_orig=$(md5sum razer_$version.orig.tar.gz  | awk '{ print $1 }')
-md5_debian=$(md5sum razer_$version-0.debian.tar.xz  | awk '{ print $1 }')
+filesize_orig=$(stat --printf="%s" openrazer_$version.orig.tar.gz)
+filesize_debian=$(stat --printf="%s" openrazer_$version-0.debian.tar.xz)
+md5_orig=$(md5sum openrazer_$version.orig.tar.gz  | awk '{ print $1 }')
+md5_debian=$(md5sum openrazer_$version-0.debian.tar.xz  | awk '{ print $1 }')
 
 # Debian/Ubuntu (don't really understand the sed command here)
 sed -i -e '/Files:/,+3d' openrazer.dsc
 echo "Files:" >> openrazer.dsc
-echo " $md5_orig $filesize_orig razer_$version.orig.tar.gz" >> openrazer.dsc
-echo " $md5_debian $filesize_debian razer_$version-0.debian.tar.xz" >> openrazer.dsc
+echo " $md5_orig $filesize_orig openrazer_$version.orig.tar.gz" >> openrazer.dsc
+echo " $md5_debian $filesize_debian openrazer_$version-0.debian.tar.xz" >> openrazer.dsc
 
