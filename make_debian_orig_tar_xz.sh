@@ -8,4 +8,4 @@ fi
 
 source common.sh
 
-curl -L $repourl/archive/v$version.tar.gz -o openrazer_$version.orig.tar.gz
+curl -L $repourl/releases/download/v$version/openrazer-$version.tar.xz -o openrazer_$version.orig.tar.xz

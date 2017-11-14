@@ -9,7 +9,7 @@ fi
 # Remove old debian files
 rm openrazer_*
 # Run various scripts
-./make_debian_orig_tar_gz.sh $version
+./make_debian_orig_tar_xz.sh $version
 ./make_debian_tar_xz.sh $version
 ./update_release.sh $version
 ./make_debian_dsc.sh

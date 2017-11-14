@@ -13,25 +13,13 @@ origloc=$(pwd)
 # Go into a new temporary folder
 cd $(mktemp -d)
 # Download the tarball.
-curl -L -O $repourl/archive/v$version.tar.gz
+curl -L -O $repourl/releases/download/v$version/openrazer-$version.tar.xz
 # Extract the debian/ folder from the archive.
-tar xzf v$version.tar.gz openrazer-$version/debian
+tar xf openrazer-$version.tar.xz openrazer-$version/debian
 # Move the debian/ folder out of the new folder.
 mv openrazer-$version/debian .
 # Remove the linux-headers-generic line.
 sed -i '/linux-headers-generic/d' debian/control
-
-# Add new meta package
-#cat <<EOF >> debian/control
-#
-#Package: openrazer-meta
-#Section: misc
-#Architecture: all
-#Depends: python3-razer,
-#         razer-daemon,
-#         razer-kernel-modules-dkms
-#Description: Meta package for openrazer
-#EOF
 
 # Repack the folder.
 tar cf - debian/ | xz -c > openrazer_$version-0.debian.tar.xz
