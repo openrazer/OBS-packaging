@@ -6,7 +6,7 @@
 #define gitcommit 6ae1f7d55bf10cc6b5cb62a5ce99ff22c43e0701
 
 Name: openrazer-meta
-Version: 2.0.0
+Version: 2.1
 Release: 1%{?dist}
 Summary: Open source driver and user-space daemon for managing Razer devices
 
