@@ -1,12 +1,12 @@
 # This spec file was tested on Fedora 25 and on OpenSUSE Leap 42.2.
 
-%define dkms_name razer_chroma_driver
+%define dkms_name openrazer-driver
 %define dkms_version 1.0.0
 
 #define gitcommit 6ae1f7d55bf10cc6b5cb62a5ce99ff22c43e0701
 
 Name: openrazer-meta
-Version: 2.1
+Version: 2.1.1
 Release: 1%{?dist}
 Summary: Open source driver and user-space daemon for managing Razer devices
 
@@ -16,7 +16,7 @@ URL: https://github.com/openrazer/openrazer
 %if 0%{?gitcommit:1}
 Source0: https://github.com/openrazer/openrazer/archive/%{gitcommit}.tar.gz
 %else
-Source0: https://github.com/openrazer/openrazer/archive/v%{version}.tar.gz
+Source0: https://github.com/openrazer/openrazer/releases/download/v%{version}/openrazer-%{version}.tar.xz
 %endif
 
 BuildArch: noarch
@@ -61,6 +61,7 @@ Requires: python3-dbus
 Requires: python3-gobject
 Requires: python3-setproctitle
 Requires: python3-pyudev
+Requires: python3-daemonize
 Requires: xautomation
 Requires: xdotool
 %description -n razer-daemon
