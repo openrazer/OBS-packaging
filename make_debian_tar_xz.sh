@@ -1,8 +1,9 @@
 #!/bin/bash
 
 version=$1
-if [ ! $version ]; then
-    echo "Usage: $0 <new-version>"
+debrel=$2
+if [ ! $version ] || [ ! $debrel ]; then
+    echo "Usage: $0 <new-version> <debrel>"
     exit 1
 fi
 
@@ -20,8 +21,10 @@ tar xf openrazer-$version.tar.xz openrazer-$version/debian
 mv openrazer-$version/debian .
 # Remove the linux-headers-generic line.
 sed -i '/linux-headers-generic/d' debian/control
+# Add revision to version number
+sed -i 's/'$version'/'$version'-'$debrel'/' debian/changelog
 
 # Repack the folder.
-tar cf - debian/ | xz -c > openrazer_$version-0.debian.tar.xz
+tar cf - debian/ | xz -c > openrazer_$version-$debrel.debian.tar.xz
 # Move the resulting file back.
-mv openrazer_$version-0.debian.tar.xz $origloc
+mv openrazer_$version-$debrel.debian.tar.xz $origloc

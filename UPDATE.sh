@@ -1,8 +1,9 @@
 #!/bin/bash
 
 version=$1
-if [ ! $version ]; then
-    echo "Usage: $0 <new-version>"
+debrel=$2
+if [ ! $version ] || [ ! $debrel ]; then
+    echo "Usage: $0 <new-version> <debrel>"
     exit 1
 fi
 
@@ -10,8 +11,8 @@ fi
 rm openrazer_*
 # Run various scripts
 ./make_debian_orig_tar_xz.sh $version
-./make_debian_tar_xz.sh $version
-./update_release.sh $version
+./make_debian_tar_xz.sh $version $debrel
+./update_release.sh $version $debrel
 ./make_debian_dsc.sh
 
 # Remove _service:download_url:* file as I don't want it in the history
