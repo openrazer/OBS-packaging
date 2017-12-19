@@ -21,17 +21,19 @@ Source0: https://github.com/openrazer/openrazer/releases/download/v%{version}/op
 
 BuildArch: noarch
 
-Requires: razer-kernel-modules-dkms
-Requires: razer-daemon
-Requires: python3-razer
+Requires: openrazer-kernel-modules-dkms
+Requires: openrazer-daemon
+Requires: python3-openrazer
 
 %description
 Meta package for installing all required openrazer packages.
 
 
-%package -n razer-kernel-modules-dkms
-Summary: Razer Driver DKMS package
+%package -n openrazer-kernel-modules-dkms
+Summary: OpenRazer Driver DKMS package
 Group: System Environment/Kernel
+Obsoletes: razer-kernel-modules-dkms
+Provides: razer-kernel-modules-dkms
 Requires: dkms
 Requires: udev
 # OBS fails without that
@@ -41,16 +43,18 @@ Requires(post): dkms
 %else
 Requires(pre): shadow-utils
 %endif
-%description -n razer-kernel-modules-dkms
+%description -n openrazer-kernel-modules-dkms
 Kernel driver for Razer devices (DKMS-variant)
 
 
-%package -n razer-daemon
-Summary: Razer Service package
+%package -n openrazer-daemon
+Summary: OpenRazer Service package
 Group: System Environment/Daemons
+Obsoletes: razer-daemon
+Provides: razer-daemon
 BuildRequires: python3-devel
 BuildRequires: python3-setuptools
-Requires: razer-kernel-modules-dkms
+Requires: openrazer-kernel-modules-dkms
 Requires: python3
 # Thanks openSUSE for this great package name...
 %if 0%{?suse_version}
@@ -64,16 +68,18 @@ Requires: python3-pyudev
 Requires: python3-daemonize
 Requires: xautomation
 Requires: xdotool
-%description -n razer-daemon
+%description -n openrazer-daemon
 Userspace daemon that abstracts access to the kernel driver. Provides a DBus service for applications to use.
 
 
-%package -n python3-razer
-Summary: Razer Python library
+%package -n python3-openrazer
+Summary: OpenRazer Python library
 Group: System Environment/Libraries
+Obsoletes: python3-razer
+Provides: python3-razer
 BuildRequires: python3-devel
 BuildRequires: python3-setuptools
-Requires: razer-daemon
+Requires: openrazer-daemon
 Requires: python3
 # Thanks openSUSE for this great package name...
 %if 0%{?suse_version}
@@ -83,7 +89,7 @@ Requires: python3-dbus
 %endif
 Requires: python3-gobject
 Requires: python3-numpy
-%description -n python3-razer
+%description -n python3-openrazer
 Python library for accessing the daemon from Python.
 
 
@@ -110,14 +116,14 @@ make DESTDIR=$RPM_BUILD_ROOT setup_dkms udev_install daemon_install python_libra
 rm -rf $RPM_BUILD_ROOT
 
 
-%pre -n razer-kernel-modules-dkms
+%pre -n openrazer-kernel-modules-dkms
 #!/bin/sh
 set -e
 
 getent group plugdev >/dev/null || groupadd -r plugdev
 
 
-%post -n razer-kernel-modules-dkms
+%post -n openrazer-kernel-modules-dkms
 #!/bin/sh
 set -e
 
@@ -135,7 +141,7 @@ echo -e "\e[31m* # sudo gpasswd -a <yourUsername> plugdev *"
 echo -e "\e[31m********************************************"
 echo -e -n "\e[39m"
 
-%preun -n razer-kernel-modules-dkms
+%preun -n openrazer-kernel-modules-dkms
 #!/bin/sh
 
 DKMS_NAME=%{dkms_name}
@@ -152,14 +158,14 @@ fi
 # meta package is empty
 
 
-%files -n razer-kernel-modules-dkms
+%files -n openrazer-kernel-modules-dkms
 %defattr(-,root,root,-)
 # A bit hacky but it works
 %{_udevrulesdir}/../razer_mount
 %{_udevrulesdir}/99-razer.rules
 %{_usrsrc}/%{dkms_name}-%{dkms_version}/
 
-%files -n razer-daemon
+%files -n openrazer-daemon
 %{_bindir}/openrazer-daemon
 %{python3_sitelib}/openrazer_daemon/
 %{python3_sitelib}/openrazer_daemon-*.egg-info/
@@ -169,6 +175,6 @@ fi
 %{_mandir}/man5/razer.conf.5.gz
 %{_mandir}/man8/openrazer-daemon.8.gz
 
-%files -n python3-razer
+%files -n python3-openrazer
 %{python3_sitelib}/openrazer/
 %{python3_sitelib}/openrazer-*.egg-info/
