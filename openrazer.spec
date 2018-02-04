@@ -59,6 +59,7 @@ Requires: python3
 # Thanks openSUSE for this great package name...
 %if 0%{?suse_version}
 Requires: dbus-1-python3
+Requires: typelib(Gdk)
 %else
 Requires: python3-dbus
 %endif
@@ -68,7 +69,6 @@ Requires: python3-pyudev
 Requires: python3-daemonize
 Requires: xautomation
 Requires: xdotool
-Requires: typelib(Gdk)
 %description -n openrazer-daemon
 Userspace daemon that abstracts access to the kernel driver. Provides a DBus service for applications to use.
 
