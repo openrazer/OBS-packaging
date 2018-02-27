@@ -2,7 +2,7 @@ Format: 3.0 (quilt)
 Source: openrazer
 Binary: openrazer-kernel-modules-dkms, openrazer-meta, openrazer-daemon, python3-openrazer, openrazer-doc
 Architecture: amd64 i386 all
-Version: 2.2.1-1
+Version: 2.2.2-1
 Maintainer: Terry Cain <terry@terrys-home.co.uk>
 Homepage: https://openrazer.github.io/
 Standards-Version: 3.9.5
@@ -16,5 +16,5 @@ Package-List:
  openrazer-doc deb doc optional arch=all
  openrazer-kernel-modules-dkms deb kernel optional arch=amd64,i386
 Files:
- 1e28db7394cb53c7e5cc989a851904ab 128220 openrazer_2.2.1.orig.tar.xz
- d7d7d8fa2623f70661e41ad4a99a7a86 7448 openrazer_2.2.1-1.debian.tar.xz
+ 5486c8ac8ae77ac883a32a5abf6cb2f9 128312 openrazer_2.2.2.orig.tar.xz
+ 994adc809afc3752a9dff1ac7950c86a 7452 openrazer_2.2.2-1.debian.tar.xz
