@@ -173,8 +173,8 @@ fi
 %{_datadir}/openrazer/
 %{_datadir}/dbus-1/services/org.razer.service
 %{_prefix}/lib/systemd/user/openrazer-daemon.service
-%{_mandir}/man5/razer.conf.5.gz
-%{_mandir}/man8/openrazer-daemon.8.gz
+%{_mandir}/man5/razer.conf.5*
+%{_mandir}/man8/openrazer-daemon.8*
 
 %files -n python3-openrazer
 %{python3_sitelib}/openrazer/
