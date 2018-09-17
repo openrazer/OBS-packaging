@@ -63,7 +63,11 @@ Requires: typelib(Gdk)
 %else
 Requires: python3-dbus
 %endif
+%if 0%{?mageia}
+Requires: python3-gobject3
+%else
 Requires: python3-gobject
+%endif
 Requires: python3-setproctitle
 Requires: python3-pyudev
 Requires: python3-daemonize
@@ -88,7 +92,11 @@ Requires: dbus-1-python3
 %else
 Requires: python3-dbus
 %endif
+%if 0%{?mageia}
+Requires: python3-gobject3
+%else
 Requires: python3-gobject
+%endif
 Requires: python3-numpy
 %description -n python3-openrazer
 Python library for accessing the daemon from Python.
@@ -124,16 +132,31 @@ set -e
 getent group plugdev >/dev/null || groupadd -r plugdev
 
 
+%if 0%{?mageia}
+
+%post -n openrazer-kernel-modules-dkms
+dkms add -m %{dkms_name} -v %{dkms_version} --rpm_safe_upgrade
+dkms build -m %{dkms_name} -v %{dkms_version} --rpm_safe_upgrade
+dkms install -m %{dkms_name} -v %{dkms_version} --rpm_safe_upgrade
+
+echo -e "\e[31m********************************************"
+echo -e "\e[31m* To complete installation, please run:    *"
+echo -e "\e[31m* # sudo gpasswd -a <yourUsername> plugdev *"
+echo -e "\e[31m********************************************"
+echo -e -n "\e[39m"
+
+%preun -n openrazer-kernel-modules-dkms
+dkms remove -m %{dkms_name} -v %{dkms_version} --rpm_safe_upgrade --all
+
+%else
+
 %post -n openrazer-kernel-modules-dkms
 #!/bin/sh
 set -e
 
-DKMS_NAME=%{dkms_name}
-DKMS_VERSION=%{dkms_version}
-
 # Only on initial installation
 if [ "$1" == 1 ]; then
-  dkms install $DKMS_NAME/$DKMS_VERSION
+  dkms install %{dkms_name}/%{dkms_version}
 fi
 
 echo -e "\e[31m********************************************"
@@ -145,15 +168,15 @@ echo -e -n "\e[39m"
 %preun -n openrazer-kernel-modules-dkms
 #!/bin/sh
 
-DKMS_NAME=%{dkms_name}
-DKMS_VERSION=%{dkms_version}
-
 # Only on uninstallation
 if [ "$1" == 0 ]; then
-  if [ "$(dkms status -m $DKMS_NAME -v $DKMS_VERSION)" ]; then
-    dkms remove -m $DKMS_NAME -v $DKMS_VERSION --all
+  if [ "$(dkms status -m %{dkms_name} -v %{dkms_version})" ]; then
+    dkms remove -m %{dkms_name} -v %{dkms_version} --all
   fi
 fi
+
+%endif
+
 
 %files
 # meta package is empty
