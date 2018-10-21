@@ -11,6 +11,7 @@ source common.sh
 
 # Fedora/openSUSE
 sed -i 's/Version: .*$/Version: '$version'/' openrazer.spec
+sed -i 's/%define dkms_version .*$/%define dkms_version '$version'/' openrazer.spec
 # Debian/Ubuntu
 sed -i 's/^Version: .*$/Version: '$version'-'$debrel'/' openrazer.dsc
 
