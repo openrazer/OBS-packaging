@@ -21,6 +21,8 @@ tar xf openrazer-$version.tar.xz openrazer-$version/debian
 mv openrazer-$version/debian .
 # Remove the linux-headers-generic line.
 sed -i '/linux-headers-generic/d' debian/control
+# TEMPORARY: Remove python3-evdev dependency
+sed -i '/python3-evdev/d' debian/control
 # Add revision to version number
 sed -i 's/'$version'/'$version'-'$debrel'/' debian/changelog
 
