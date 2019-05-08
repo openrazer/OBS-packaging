@@ -3,13 +3,13 @@
 %define dkms_name openrazer-driver
 %define dkms_version 2.5.0
 
+%{!?rel: %define rel 1}
 #define gitcommit 6ae1f7d55bf10cc6b5cb62a5ce99ff22c43e0701
 
 Name: openrazer-meta
 Version: 2.5.0
-Release: 1%{?dist}
+Release: %{rel}%{?gitcommit:.%(tag="%{gitcommit}"; echo "${tag:0:7}")}%{?dist}
 Summary: Open source driver and user-space daemon for managing Razer devices
-
 License: GPL-2.0
 URL: https://github.com/openrazer/openrazer
 
