@@ -1,4 +1,4 @@
-# This spec file was tested on Fedora 25 and on OpenSUSE Leap 42.2.
+# This spec file was tested on Fedora 29
 
 %define dkms_name openrazer-driver
 %define dkms_version 2.5.0
@@ -109,6 +109,14 @@ Python library for accessing the daemon from Python.
 %autosetup -n openrazer-%{version}
 %endif
 
+%if 0%{fedora}
+#FIX: replace 'plugdev'-group with 'input'-group for Fedora
+for F in daemon driver examples install_files logo pylib scripts; do
+find "$F" -type f | xargs sed -re 's/plugdev/input/' -i
+done
+%endif
+
+
 %build
 # noop
 
@@ -119,7 +127,6 @@ rm -rf $RPM_BUILD_ROOT
 # daemon_install -> razer_daemon
 # python_library_install -> python3-razer
 make DESTDIR=$RPM_BUILD_ROOT setup_dkms udev_install daemon_install python_library_install
-
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -141,9 +148,14 @@ dkms install -m %{dkms_name} -v %{dkms_version} --rpm_safe_upgrade
 
 echo -e "\e[31m********************************************"
 echo -e "\e[31m* To complete installation, please run:    *"
-echo -e "\e[31m* # sudo gpasswd -a <yourUsername> plugdev *"
+%if 0%{fedora}
+echo -e "\e[31m* # su -c 'usermod -aGinput <yourUsername>'*"
+%else
+echo -e "\e[31m* # sudo gpasswd -a <yourUsername> input *"
+%endif
 echo -e "\e[31m********************************************"
 echo -e -n "\e[39m"
+
 
 %preun -n openrazer-kernel-modules-dkms
 dkms remove -m %{dkms_name} -v %{dkms_version} --rpm_safe_upgrade --all
@@ -198,6 +210,7 @@ fi
 %{_prefix}/lib/systemd/user/openrazer-daemon.service
 %{_mandir}/man5/razer.conf.5*
 %{_mandir}/man8/openrazer-daemon.8*
+%doc README.md
 
 %files -n python3-openrazer
 %{python3_sitelib}/openrazer/
