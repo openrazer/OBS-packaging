@@ -3,6 +3,9 @@
 # Builds rpms from sources located at current directory, 
 # postfix with 'local' text will be added to version
 # Usage example: rpmbuild --build-in-place -bb ../OBS-packaging/openrazer.spec
+#
+#      --with=changelog
+# Attach to rpm packages changelog from file openrazer-'version'.changelog
 
 ### Defines (--define 'name value')
 # rel          - set release prefix (default '1')
@@ -15,6 +18,7 @@
 
 %{!?rel: %define rel 1}
 #define gitcommit 6ae1f7d55bf10cc6b5cb62a5ce99ff22c43e0701
+%bcond_with changelog
 
 Name: openrazer-meta
 Version: 2.5.0
@@ -239,4 +243,4 @@ fi
 %{python3_sitelib}/openrazer-*.egg-info/
 
 %changelog
-%{!?_build_in_place: %include %{_sourcedir}/openrazer-%{version}.changelog}
+%{?with_changelog: %include %{_sourcedir}/openrazer-%{version}.changelog}
