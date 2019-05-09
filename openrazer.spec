@@ -186,7 +186,7 @@ echo -e "\e[31;1m* # su -c 'usermod -aGinput <yourUsername>'*"
 echo -e "\e[31;1m* # sudo gpasswd -a <yourUsername> input *"
 %endif
 echo -e "\e[31;1m********************************************"
-echo -e -n "\e[39m"
+echo -e -n "\e[39;0m"
 
 
 %preun -n openrazer-kernel-modules-dkms
