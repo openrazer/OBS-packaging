@@ -36,8 +36,10 @@ Requires: openrazer-daemon
 Requires: python3-openrazer
 
 %description
-Meta package for installing all required openrazer packages.
+OpenRazer is a collection of GNU/Linux drivers for the Razer devices.
+Supported devices include keyboards, mice, mouse-mats, headsets and various other devices.
 
+This package is a metapackage which depends on the OpenRazer driver and userspace daemon and a Python library.
 
 %package -n openrazer-kernel-modules-dkms
 Summary: OpenRazer Driver DKMS package
@@ -54,8 +56,10 @@ Requires(post): dkms
 Requires(pre): shadow-utils
 %endif
 %description -n openrazer-kernel-modules-dkms
-Kernel driver for Razer devices (DKMS-variant)
-
+OpenRazer is a collection of GNU/Linux drivers for the Razer devices.
+Supported devices include keyboards, mice, mouse-mats, headsets and various other devices.
+ 
+This package provides the source code for the OpenRazer kernel module to be build with dkms. Kernel sources or headers are required to compile this module.
 
 %package -n openrazer-daemon
 Summary: OpenRazer Service package
@@ -84,8 +88,11 @@ Requires: python3-daemonize
 Requires: xautomation
 Requires: xdotool
 %description -n openrazer-daemon
-Userspace daemon that abstracts access to the kernel driver. Provides a DBus service for applications to use.
-
+OpenRazer is a collection of GNU/Linux drivers for the Razer devices.
+Supported devices include keyboards, mice, mouse-mats, headsets and various other devices.
+ 
+This package provides a user-space daemon used to interface with the driver.
+Provides a DBus service for applications to use.
 
 %package -n python3-openrazer
 Summary: OpenRazer Python library
@@ -109,8 +116,10 @@ Requires: python3-gobject
 %endif
 Requires: python3-numpy
 %description -n python3-openrazer
-Python library for accessing the daemon from Python.
-
+OpenRazer is a collection of GNU/Linux drivers for the Razer devices.
+Supported devices include keyboards, mice, mouse-mats, headsets and various other devices.
+ 
+This package contains a library for interacting with the OpenRazer daemon.
 
 %prep
 %if 0%{?_build_in_place:1}
