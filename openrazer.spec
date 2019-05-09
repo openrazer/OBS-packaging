@@ -1,3 +1,13 @@
+### Features
+#      --build-in-place     
+# Builds rpms from sources located at current directory, 
+# postfix with 'local' text will be added to version
+# Usage example: rpmbuild --build-in-place -bb ../OBS-packaging/openrazer.spec
+
+### Defines (--define 'name value')
+# rel          - set release prefix (default '1')
+# gitcommit    - use sources of this commit for building packages (+adds gittag to release)
+
 # This spec file was tested on Fedora 29
 
 %define dkms_name openrazer-driver
@@ -8,7 +18,7 @@
 
 Name: openrazer-meta
 Version: 2.5.0
-Release: %{rel}%{?gitcommit:.%(tag="%{gitcommit}"; echo "${tag:0:7}")}%{?dist}
+Release: %{rel}%{?_build_in_place:.local}%{?gitcommit:.%(tag="%{gitcommit}"; echo "${tag:0:7}")}%{?dist}
 Summary: Open source driver and user-space daemon for managing Razer devices
 License: GPL-2.0
 URL: https://github.com/openrazer/openrazer
@@ -103,10 +113,13 @@ Python library for accessing the daemon from Python.
 
 
 %prep
+%if 0%{?_build_in_place:1}
+%else
 %if 0%{?gitcommit:1}
 %autosetup -n openrazer-%{gitcommit}
 %else
 %autosetup -n openrazer-%{version}
+%endif
 %endif
 
 %if 0%{fedora}
@@ -115,7 +128,6 @@ for F in daemon driver examples install_files logo pylib scripts; do
 find "$F" -type f | xargs sed -re 's/plugdev/input/' -i
 done
 %endif
-
 
 %build
 # noop
@@ -136,7 +148,9 @@ rm -rf $RPM_BUILD_ROOT
 #!/bin/sh
 set -e
 
+%if 0%{!?fedora:1}
 getent group plugdev >/dev/null || groupadd -r plugdev
+%endif
 
 
 %if 0%{?mageia}
@@ -171,6 +185,8 @@ if [ "$1" == 1 ]; then
   dkms install %{dkms_name}/%{dkms_version}
 fi
 
+%endif
+
 echo -e "\e[31m********************************************"
 echo -e "\e[31m* To complete installation, please run:    *"
 echo -e "\e[31m* # sudo gpasswd -a <yourUsername> plugdev *"
@@ -186,9 +202,6 @@ if [ "$1" == 0 ]; then
     dkms remove -m %{dkms_name} -v %{dkms_version} --all
   fi
 fi
-
-%endif
-
 
 %files
 # meta package is empty
@@ -215,3 +228,6 @@ fi
 %files -n python3-openrazer
 %{python3_sitelib}/openrazer/
 %{python3_sitelib}/openrazer-*.egg-info/
+
+%changelog
+%{!?_build_in_place: %include %{_sourcedir}/openrazer-%{version}.changelog}
