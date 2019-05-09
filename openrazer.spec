@@ -145,7 +145,6 @@ done
 %build
 # noop
 
-
 %install
 rm -rf $RPM_BUILD_ROOT
 # setup_dkms & udev_install -> razer-kernel-modules-dkms
@@ -156,7 +155,6 @@ make DESTDIR=$RPM_BUILD_ROOT setup_dkms udev_install daemon_install python_libra
 %clean
 rm -rf $RPM_BUILD_ROOT
 
-
 %pre -n openrazer-kernel-modules-dkms
 #!/bin/sh
 set -e
@@ -166,55 +164,45 @@ getent group plugdev >/dev/null || groupadd -r plugdev
 %endif
 
 
-%if 0%{?mageia}
-
 %post -n openrazer-kernel-modules-dkms
+#!/bin/sh
+%if 0%{?mageia}
 dkms add -m %{dkms_name} -v %{dkms_version} --rpm_safe_upgrade
 dkms build -m %{dkms_name} -v %{dkms_version} --rpm_safe_upgrade
 dkms install -m %{dkms_name} -v %{dkms_version} --rpm_safe_upgrade
-
-echo -e "\e[31m********************************************"
-echo -e "\e[31m* To complete installation, please run:    *"
-%if 0%{fedora}
-echo -e "\e[31m* # su -c 'usermod -aGinput <yourUsername>'*"
 %else
-echo -e "\e[31m* # sudo gpasswd -a <yourUsername> input *"
-%endif
-echo -e "\e[31m********************************************"
-echo -e -n "\e[39m"
-
-
-%preun -n openrazer-kernel-modules-dkms
-dkms remove -m %{dkms_name} -v %{dkms_version} --rpm_safe_upgrade --all
-
-%else
-
-%post -n openrazer-kernel-modules-dkms
-#!/bin/sh
 set -e
-
 # Only on initial installation
 if [ "$1" == 1 ]; then
   dkms install %{dkms_name}/%{dkms_version}
 fi
-
 %endif
 
-echo -e "\e[31m********************************************"
-echo -e "\e[31m* To complete installation, please run:    *"
-echo -e "\e[31m* # sudo gpasswd -a <yourUsername> plugdev *"
-echo -e "\e[31m********************************************"
+echo -e "\e[31;1m********************************************"
+echo -e "\e[31;1m* To complete installation, please run:    *"
+%if 0%{fedora}
+echo -e "\e[31;1m* # su -c 'usermod -aGinput <yourUsername>'*"
+%else
+echo -e "\e[31;1m* # sudo gpasswd -a <yourUsername> input *"
+%endif
+echo -e "\e[31;1m********************************************"
 echo -e -n "\e[39m"
+
 
 %preun -n openrazer-kernel-modules-dkms
 #!/bin/sh
 
+%if 0%{?mageia}
+dkms remove -m %{dkms_name} -v %{dkms_version} --rpm_safe_upgrade --all
+%else
 # Only on uninstallation
 if [ "$1" == 0 ]; then
   if [ "$(dkms status -m %{dkms_name} -v %{dkms_version})" ]; then
     dkms remove -m %{dkms_name} -v %{dkms_version} --all
   fi
 fi
+%endif
+
 
 %files
 # meta package is empty
