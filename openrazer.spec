@@ -72,7 +72,6 @@ Requires: python3-setproctitle
 Requires: python3-pyudev
 Requires: python3-daemonize
 Requires: xautomation
-Requires: xdotool
 %description -n openrazer-daemon
 Userspace daemon that abstracts access to the kernel driver. Provides a DBus service for applications to use.
 
