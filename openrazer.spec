@@ -59,7 +59,7 @@ Requires: python3
 # Thanks openSUSE for this great package name...
 %if 0%{?suse_version}
 Requires: dbus-1-python3
-Requires: typelib(Gdk)
+Requires: typelib(Gdk) = 3.0
 %else
 Requires: python3-dbus
 %endif
