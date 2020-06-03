@@ -35,6 +35,7 @@ Group: System Environment/Kernel
 Obsoletes: razer-kernel-modules-dkms
 Provides: razer-kernel-modules-dkms
 Requires: dkms
+Requires: make
 Requires: udev
 # OBS fails without that
 %if 0%{?suse_version}
@@ -43,6 +44,7 @@ Requires(post): dkms
 %else
 Requires(pre): shadow-utils
 %endif
+
 %description -n openrazer-kernel-modules-dkms
 Kernel driver for Razer devices (DKMS-variant)
 
@@ -56,7 +58,6 @@ BuildRequires: python3-devel
 BuildRequires: python3-setuptools
 Requires: openrazer-kernel-modules-dkms
 Requires: python3
-# Thanks openSUSE for this great package name...
 %if 0%{?suse_version}
 Requires: dbus-1-python3
 Requires: typelib(Gdk) = 3.0
@@ -72,6 +73,7 @@ Requires: python3-setproctitle
 Requires: python3-pyudev
 Requires: python3-daemonize
 Requires: xautomation
+
 %description -n openrazer-daemon
 Userspace daemon that abstracts access to the kernel driver. Provides a DBus service for applications to use.
 
@@ -85,7 +87,6 @@ BuildRequires: python3-devel
 BuildRequires: python3-setuptools
 Requires: openrazer-daemon
 Requires: python3
-# Thanks openSUSE for this great package name...
 %if 0%{?suse_version}
 Requires: dbus-1-python3
 %else
@@ -97,6 +98,7 @@ Requires: python3-gobject3
 Requires: python3-gobject
 %endif
 Requires: python3-numpy
+
 %description -n python3-openrazer
 Python library for accessing the daemon from Python.
 
