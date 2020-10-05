@@ -66,12 +66,13 @@ Requires: python3-dbus
 %endif
 %if 0%{?mageia}
 Requires: python3-gobject3
+Requires: python3-daemon
 %else
 Requires: python3-gobject
+Requires: python3-daemonize
 %endif
 Requires: python3-setproctitle
 Requires: python3-pyudev
-Requires: python3-daemonize
 Requires: xautomation
 
 %description -n openrazer-daemon
