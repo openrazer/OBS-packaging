@@ -6,5 +6,5 @@ if [ "openrazer" == "$(basename $PWD)" ]; then
 fi
 
 echo "Copying..."
-cp ../openrazer/* .
+cp ../../hardware:razer/openrazer/* .
 echo "Copied."
