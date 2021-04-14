@@ -155,10 +155,7 @@ dkms remove -m %{dkms_name} -v %{dkms_version} --rpm_safe_upgrade --all
 #!/bin/sh
 set -e
 
-# Only on initial installation
-if [ "$1" == 1 ]; then
-  dkms install %{dkms_name}/%{dkms_version}
-fi
+dkms install %{dkms_name}/%{dkms_version}
 
 echo -e "\e[31m********************************************"
 echo -e "\e[31m* To complete installation, please run:    *"
@@ -169,11 +166,8 @@ echo -e -n "\e[39m"
 %preun -n openrazer-kernel-modules-dkms
 #!/bin/sh
 
-# Only on uninstallation
-if [ "$1" == 0 ]; then
-  if [ "$(dkms status -m %{dkms_name} -v %{dkms_version})" ]; then
-    dkms remove -m %{dkms_name} -v %{dkms_version} --all
-  fi
+if [ "$(dkms status -m %{dkms_name} -v %{dkms_version})" ]; then
+  dkms remove -m %{dkms_name} -v %{dkms_version} --all
 fi
 
 %endif
