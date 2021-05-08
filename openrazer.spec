@@ -1,4 +1,4 @@
-# This spec file was tested on Fedora 25 and on OpenSUSE Leap 42.2.
+# This spec file should work on Fedora, openSUSE and Mageia
 
 %define dkms_name openrazer-driver
 %define dkms_version 3.0.1
