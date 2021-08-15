@@ -1,0 +1,2 @@
+Requires: kernel-%1
+Conflicts: openrazer-kernel-modules-dkms
