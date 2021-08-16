@@ -69,6 +69,15 @@ BuildArch:      noarch
 %description -n openrazer-meta
 Meta package for installing all required openrazer packages.
 
+%package -n openrazer-udev
+Summary:        Open source driver and user-space daemon for managing Razer devices - udev rules
+BuildArch:      noarch
+%description -n openrazer-udev
+A collection of Linux drivers for Razer devices - providing kernel drivers,
+DBus services and Python bindings to interact with the DBus interface.
+
+udev rules to set proper permissions.
+
 %if %{without openrazer_kmp}
 
 %package -n openrazer-kernel-modules-dkms
@@ -79,6 +88,7 @@ Obsoletes:      razer-kernel-modules-dkms
 Provides:       razer-kernel-modules-dkms
 Requires:       dkms
 Requires:       make
+Requires:       openrazer-udev = %{version}
 # OBS fails without that
 #
 # actually this requires needs to be there at runtime as well because a requires
@@ -262,11 +272,13 @@ fi
 
 %endif
 
-%files -n openrazer-daemon
+%files -n openrazer-udev
 # A bit hacky but it works
 %{_udevrulesdir}/../razer_mount
 %{_udevrulesdir}/99-razer.rules
 #
+
+%files -n openrazer-daemon
 %{_bindir}/openrazer-daemon
 %{python3_sitelib}/openrazer_daemon/
 %{python3_sitelib}/openrazer_daemon-*.egg-info/
