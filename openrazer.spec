@@ -8,10 +8,8 @@
 %define dkms_version 3.1.0
 
 %if 0%{?suse_version}
-%define openrazer_driver_package openrazer-kmp
 %bcond_without openrazer_kmp
 %else
-%define openrazer_driver_package openrazer-kernel-modules-dkms
 %bcond_with    openrazer_kmp
 %endif
 
@@ -78,8 +76,6 @@ DBus services and Python bindings to interact with the DBus interface.
 
 udev rules to set proper permissions.
 
-%if %{without openrazer_kmp}
-
 %package -n openrazer-kernel-modules-dkms
 Requires:       python3-openrazer
 Summary:        OpenRazer Driver DKMS package
@@ -89,6 +85,8 @@ Provides:       razer-kernel-modules-dkms
 Requires:       dkms
 Requires:       make
 Requires:       openrazer-udev = %{version}
+Conflicts:      openrazer-kmp
+Provides:       openrazer-driver
 # OBS fails without that
 #
 # actually this requires needs to be there at runtime as well because a requires
@@ -104,15 +102,16 @@ Requires(preun): make
 %description -n openrazer-kernel-modules-dkms
 Kernel driver for Razer devices (DKMS-variant)
 
-%endif
-
 %package -n openrazer-daemon
 Summary:        OpenRazer Service package
 Group:          System Environment/Daemons
 BuildArch:      noarch
 Obsoletes:      razer-daemon
 Provides:       razer-daemon
-Requires:       %{openrazer_driver_package}
+Requires:       openrazer-driver
+%if %{with openrazer_kmp}
+Recommends:     openrazer-kmp
+%endif
 Requires:       python3
 %if 0%{?suse_version}
 Requires:       dbus-1-python3
@@ -172,7 +171,7 @@ Python library for accessing the daemon from Python.
 %if %{with openrazer_kmp}
 set -- driver/*
 mkdir source
-mv "$@" source/
+cp -a "$@" source/
 mkdir obj
 %endif
 
@@ -192,9 +191,7 @@ done
 # daemon_install -> razer_daemon
 # python_library_install -> python3-razer
 make DESTDIR=$RPM_BUILD_ROOT \
-    %if %{without openrazer_kmp}
     setup_dkms \
-    %endif
     udev_install \
     daemon_install \
     python_library_install
@@ -216,8 +213,6 @@ rm -rf $RPM_BUILD_ROOT
 #!/bin/sh
 set -e
 getent group plugdev >/dev/null || groupadd -r plugdev
-
-%if %{without openrazer_kmp}
 
 %if 0%{?mageia}
 
@@ -269,8 +264,6 @@ fi
 %files -n openrazer-kernel-modules-dkms
 %defattr(-,root,root,-)
 %{_usrsrc}/%{dkms_name}-%{dkms_version}/
-
-%endif
 
 %files -n openrazer-udev
 # A bit hacky but it works
