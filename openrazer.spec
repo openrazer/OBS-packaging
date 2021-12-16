@@ -135,7 +135,7 @@ getent group plugdev >/dev/null || groupadd -r plugdev
 
 %if 0%{?mageia}
 
-%post -n openrazer-kernel-modules-dkms
+%posttrans -n openrazer-kernel-modules-dkms
 dkms add -m %{dkms_name} -v %{dkms_version} --rpm_safe_upgrade
 dkms build -m %{dkms_name} -v %{dkms_version} --rpm_safe_upgrade
 dkms install -m %{dkms_name} -v %{dkms_version} --rpm_safe_upgrade
@@ -151,7 +151,7 @@ dkms remove -m %{dkms_name} -v %{dkms_version} --rpm_safe_upgrade --all
 
 %else
 
-%post -n openrazer-kernel-modules-dkms
+%posttrans -n openrazer-kernel-modules-dkms
 #!/bin/sh
 set -e
 
