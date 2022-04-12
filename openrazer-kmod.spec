@@ -22,8 +22,6 @@ BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 BuildRequires:  %{_bindir}/kmodtool
 
-Provides:       openrazer-kernel-modules-dkms
-
 
 # Verify that the package build for all architectures.
 # In most time you should remove the Exclusive/ExcludeArch directives

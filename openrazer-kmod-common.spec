@@ -13,6 +13,8 @@ URL:            https://github.com/openrazer/openrazer
 Source0:        https://github.com/openrazer/openrazer/releases/download/v%{version}/openrazer-%{version}.tar.xz
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildRequires:  make
+Provides:       openrazer-kernel-modules-dkms
+Requires:       kmod-openrazer
 
 
 %description
