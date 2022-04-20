@@ -9,7 +9,7 @@
 # name should have a -kmod suffix
 Name: openrazer-kmod
 
-Version:        3.2.0
+Version:        3.3.0
 Release:        1%{?dist}.1
 Summary:        OpenRazer Kernel modules
 

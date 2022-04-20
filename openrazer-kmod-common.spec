@@ -2,7 +2,7 @@
 
 Name: openrazer-kmod-common
 
-Version:        3.2.0
+Version:        3.3.0
 Release:        1%{?dist}.1
 Summary:        OpenRazer UDev rules
 
@@ -38,6 +38,12 @@ make -C openrazer-%{version} DESTDIR=${RPM_BUILD_ROOT} udev_install
 
 %clean
 rm -rf ${RPM_BUILD_ROOT}
+
+
+%pre
+#!/bin/sh
+set -e
+getent group plugdev >/dev/null || groupadd -r plugdev
 
 
 %files
