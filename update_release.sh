@@ -21,8 +21,7 @@ cp _service /tmp/_service
 echo "Backup in /tmp/_service"
 rm _service*
 
-echo "ATTENTION! Update _service manually! See https://github.com/openSUSE/osc/issues/905"
-#osc add $repourl/releases/download/v$version/openrazer-$version.tar.xz
+osc add $repourl/releases/download/v$version/openrazer-$version.tar.xz
 
 # --- UPDATE CHECKSUMS ---
 checksum=$(grep "checksum" _service | cut -d '>' -f2 | cut -d '<' -f1)
