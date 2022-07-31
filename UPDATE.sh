@@ -13,7 +13,6 @@ rm openrazer_*
 ./make_debian_orig_tar_xz.sh $version
 ./make_debian_tar_xz.sh $version $debrel
 ./update_release.sh $version $debrel
-./make_debian_dsc.sh
 
 # Remove _service:download_url:* file as I don't want it in the history
 rm _service:download_url:*
