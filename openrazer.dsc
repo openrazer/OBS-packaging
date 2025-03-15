@@ -2,7 +2,7 @@ Format: 3.0 (quilt)
 Source: openrazer
 Binary: openrazer-meta, openrazer-driver-dkms, openrazer-daemon, python3-openrazer, openrazer-doc
 Architecture: all
-Version: 3.10.0-0
+Version: 3.10.1-0
 Maintainer: Luca Weiss <debian@lucaweiss.eu>
 Homepage: https://openrazer.github.io/
 Standards-Version: 4.6.0
@@ -17,5 +17,5 @@ Package-List:
  openrazer-meta deb misc optional arch=all
  python3-openrazer deb python optional arch=all
 Files:
- ea1f3646d5a16ea65438d585a2837fcd 188448 openrazer_3.10.0.orig.tar.xz
- c90a83f1a257568233398a54766b507a 11784 openrazer_3.10.0-0.debian.tar.xz
+ 5f251f8667aee3a9c99d6cdd217ca6aa 188836 openrazer_3.10.1.orig.tar.xz
+ b594caac1a911be91e2668ccb8fc850c 11800 openrazer_3.10.1-0.debian.tar.xz
