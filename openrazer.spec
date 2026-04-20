@@ -152,10 +152,12 @@ dkms remove -m %{dkms_name} -v %{dkms_version} --rpm_safe_upgrade --all
 %else
 
 %posttrans -n openrazer-kernel-modules-dkms
-#!/bin/sh
+#!/bin/bash
 set -e
 
-dkms install %{dkms_name}/%{dkms_version}
+for version in $(ls /lib/modules | sort -uV); do
+  dkms install %{dkms_name}/%{dkms_version} -k $version
+done
 
 echo -e "\e[31m********************************************"
 echo -e "\e[31m* To complete installation, please run:    *"
