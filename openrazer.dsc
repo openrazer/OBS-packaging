@@ -8,8 +8,8 @@ Homepage: https://openrazer.github.io/
 Standards-Version: 4.6.0
 Vcs-Browser: https://github.com/openrazer/openrazer/
 Vcs-Git: https://github.com/openrazer/openrazer.git
-Build-Depends: debhelper (>= 11), dh-python, python3, python3-setuptools
-Build-Depends-Indep: dh-dkms | dkms (<< 3.0.10)
+Build-Depends: debhelper (>= 11), dh-python, python3, python3-build, python3-installer, python3-setuptools
+Build-Depends-Indep: dh-dkms
 Package-List:
  openrazer-daemon deb misc optional arch=all
  openrazer-doc deb doc optional arch=all
