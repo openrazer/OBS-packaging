@@ -21,6 +21,11 @@ Source0: https://github.com/openrazer/openrazer/releases/download/v%{version}/op
 
 BuildArch: noarch
 
+BuildRequires: make
+BuildRequires: python3-build
+BuildRequires: python3-devel
+BuildRequires: python3-installer
+BuildRequires: python3-setuptools
 Requires: openrazer-kernel-modules-dkms
 Requires: openrazer-daemon
 Requires: python3-openrazer
@@ -32,8 +37,6 @@ Meta package for installing all required openrazer packages.
 %package -n openrazer-kernel-modules-dkms
 Summary: OpenRazer Driver DKMS package
 Group: System Environment/Kernel
-Obsoletes: razer-kernel-modules-dkms
-Provides: razer-kernel-modules-dkms
 Requires: dkms
 Requires: make
 Requires: udev
@@ -52,10 +55,6 @@ Kernel driver for Razer devices (DKMS-variant)
 %package -n openrazer-daemon
 Summary: OpenRazer Service package
 Group: System Environment/Daemons
-Obsoletes: razer-daemon
-Provides: razer-daemon
-BuildRequires: python3-devel
-BuildRequires: python3-setuptools
 Requires: openrazer-kernel-modules-dkms
 Requires: python3
 %if 0%{?suse_version}
@@ -69,10 +68,7 @@ Requires: python3-gobject3
 %else
 Requires: python3-gobject
 %endif
-Requires: python3-setproctitle
 Requires: python3-pyudev
-Requires: python3-daemonize
-Requires: xautomation
 
 %description -n openrazer-daemon
 Userspace daemon that abstracts access to the kernel driver. Provides a DBus service for applications to use.
@@ -81,10 +77,6 @@ Userspace daemon that abstracts access to the kernel driver. Provides a DBus ser
 %package -n python3-openrazer
 Summary: OpenRazer Python library
 Group: System Environment/Libraries
-Obsoletes: python3-razer
-Provides: python3-razer
-BuildRequires: python3-devel
-BuildRequires: python3-setuptools
 Requires: openrazer-daemon
 Requires: python3
 %if 0%{?suse_version}
@@ -187,7 +179,7 @@ fi
 %files -n openrazer-daemon
 %{_bindir}/openrazer-daemon
 %{python3_sitelib}/openrazer_daemon/
-%{python3_sitelib}/openrazer_daemon-*.egg-info/
+%{python3_sitelib}/openrazer_daemon-%{version}.dist-info/
 %{_datadir}/openrazer/
 %{_datadir}/dbus-1/services/org.razer.service
 %{_prefix}/lib/systemd/user/openrazer-daemon.service
@@ -196,4 +188,4 @@ fi
 
 %files -n python3-openrazer
 %{python3_sitelib}/openrazer/
-%{python3_sitelib}/openrazer-*.egg-info/
+%{python3_sitelib}/openrazer-%{version}.dist-info/
